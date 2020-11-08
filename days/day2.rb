@@ -17,14 +17,13 @@ class Day2 < Day
     lines.map do |line|
       solve_line(line)
     end.sum
-
   end
 
   def solve_line(line)
     line.combination(2).filter_map do |a, b|
       a, b = [a, b].minmax
       q, r = b.divmod(a)
-      q if r.zero?
+      q if r == 0
     end.first
   end
 end

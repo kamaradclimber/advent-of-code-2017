@@ -36,6 +36,6 @@ class Day
   private
 
   def valid_part!
-    raise ArgumentError, "Invalid part #{@part}" unless [1,2].include?(@part)
+    raise ArgumentError, "Invalid part #{@part}" unless [1, 2].include?(@part)
   end
 end

@@ -13,3 +13,23 @@ Style/Documentation:
 
 Naming/MethodParameterName:
   Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+Layout/LineLength:
+  IgnoredPatterns:
+    - '"\d+"'
+    - '''\d+'''
+
+Style/NumericPredicate:
+  EnforcedStyle: comparison
+
+Metrics/MethodLength:
+  Max: 30
+
+Metrics/AbcSize:
+  Enabled: false

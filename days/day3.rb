@@ -3,11 +3,10 @@
 require 'aoc'
 
 class Day3 < Day
-
   def initialize(*)
     super
     @part2_values = Hash.new(0)
-    @part2_values[[0,0]] = 1
+    @part2_values[[0, 0]] = 1
   end
 
   # south-east number of the grid is (1 + 2n)^2 where n is the position of this number (n, -n) on the grid
@@ -48,6 +47,7 @@ class Day3 < Day
     (1..index).each do |i|
       x, y = coords(i)
       next if @part2_values[[x, y]] > 0
+
       deltas = [
         [1, -1], [1, 0], [1, 1],
         [0, -1], [0, 1],
@@ -62,7 +62,7 @@ class Day3 < Day
 
   # @inefficient
   def part2_at(x, y)
-    ring = if x.positive? && [x, y] == [x, -x]
+    ring = if x > 0 && [x, y] == [x, -x]
              x.abs
            else
              [x.abs, y.abs].max - 1
