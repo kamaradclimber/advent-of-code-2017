@@ -56,17 +56,29 @@ RSpec.describe Day3 do
   describe 'part 2' do
     let(:part) { 2 }
     {
+      1 => 1,
+      2 => 1,
+      3 => 2,
+      4 => 4,
+      5 => 5
     }.each do |example, solution|
       context "example #{example[0..15]}" do
         let(:input) { example }
-        pending "works on example #{example}" do
-          expect(subject.solve).to eq(solution)
+        it "works on example #{example}" do
+          expect(subject.part2_value_at(example)).to eq(solution)
         end
       end
     end
 
+    it 'computes index of coords' do
+      (1..300).to_a.each do |index|
+        x, y = subject.coords(index)
+        expect(subject.part2_at(x, y)).to eq(index)
+      end
+    end
+
     context 'real input' do
-      pending 'finds a solution for part2' do
+      it 'finds a solution for part2' do
         solution = subject.solve
         puts "Solution for part 2 is #{solution}"
       end

@@ -10,3 +10,6 @@ Gemspec/DuplicatedAssignment:
 
 Style/Documentation:
   Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: false
