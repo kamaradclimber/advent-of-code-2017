@@ -2,28 +2,8 @@
 
 require 'aoc'
 
-class Day1
-  def initialize(part2: false)
-    @part2 = part2
-  end
-
-  def to_s
-    self.class.name + (part2? ? ' part2' : '')
-  end
-
-  def part2?
-    @part2
-  end
-
-  def captcha(input)
-    if part2?
-      captcha_part2(input)
-    else
-      captcha_part1(input)
-    end
-  end
-
-  def captcha_part1(input)
+class Day1 < Day
+  def solve_part1
     chars = input.to_s.chars
     chars << chars.first
     chars.each_cons(2).filter_map do |el, next_el|
@@ -31,7 +11,7 @@ class Day1
     end.sum
   end
 
-  def captcha_part2(input)
+  def solve_part2
     chars = input.to_s.chars
     ahead = chars.size / 2
 

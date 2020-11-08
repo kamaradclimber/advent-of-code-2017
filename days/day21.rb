@@ -2,6 +2,5 @@
 
 require 'aoc'
 
-class Day1
-  def initialize; end
+class Day21 < Day
 end
