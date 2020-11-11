@@ -13,52 +13,27 @@ class Day13 < Day
     delay = 0
 
     loop do
-      puts "Delay #{delay}" if delay % 10000 == 0
-      firewall_copy = @firewall.transform_values(&:dup)
-      break if traverse_firewall(firewall_copy).empty?
+      break if traverse_firewall(@firewall, initial_tick: delay).empty?
 
-      @firewall.values.each(&:tick)
       delay += 1
     end
 
     delay
   end
 
-  def print_firewall(firewall, cur_layer: nil)
-    layers = firewall.keys.max + 1
-    max_line = firewall.values.map(&:range).max
-    max_line.times do |line|
-      layers.times do |layer|
-        chars = if firewall[layer]
-                  if firewall[layer].position == line
-                    '[S] '
-                  elsif firewall[layer].range > line
-                    '[ ]'
-                  else
-                    '... '
-                  end
-                else
-                  '... '
-                end
-        chars.gsub('[', '(').gsub(']', ')') if cur_layer == layer
-        print chars
-      end
-      puts ''
-    end
-  end
-
   # @param firewall [Hash<int, Scanner>]
   # @return [Array<Integer>] severities of the trip
-  def traverse_firewall(firewall)
+  def traverse_firewall(firewall, initial_tick: 0)
     packet_layer = -1
     severities = []
     max_layer = firewall.keys.max
+    tick = initial_tick
     until packet_layer > max_layer
       packet_layer += 1
-      severities << packet_layer * firewall[packet_layer].range if firewall[packet_layer]&.position == 0
+      severities << packet_layer * firewall[packet_layer].range if firewall[packet_layer]&.position(tick) == 0
       break if part2? && severities.any?
 
-      firewall.values.each(&:tick)
+      tick += 1
     end
     severities
   end
@@ -72,28 +47,22 @@ class Day13 < Day
   end
 
   class Scanner
-    attr_reader :range, :position
+    attr_reader :range
 
     # @param depth [Integer] layer of this scanner
     # @param range [Integer] depth of the scanner
-    # @param initial_position [Integer]
-    # @param inital_direction [Integer]
-    def initialize(depth:, range:, initial_position: 0, initial_direction: 1)
+    def initialize(depth:, range:)
       @depth = depth
       @range = range
-      @position = initial_position
-      @direction = initial_direction
     end
 
-    def tick
-      @position += @direction
-      @direction *= -1 if @position == @range - 1 || @position == 0
-    end
-
-    def dup
-      Scanner.new(depth: @depth, range: range,
-                  initial_position: position,
-                  initial_direction: @direction)
+    def position(tick)
+      virtual_pos = tick % (2 * range - 2)
+      if virtual_pos < range
+        virtual_pos
+      else
+        range - (tick % (range - 1)) - 1
+      end
     end
   end
 end
