@@ -17,14 +17,16 @@ class Day12 < Day
 
   def solve_part2
     parse_input
-    groups = []
-    while groups.map(&:size).sum < @programs.size
-      starting_program = @programs.values.find { |p| groups.none? { |g| g.include?(p) } }
+    groups = 0
+    until @programs.empty?
+      starting_program = @programs.values.first
       raise 'Impossible to find a program that is not already in one of the group' unless starting_program
 
-      groups << connex_component(starting_program)
+      visited = connex_component(starting_program)
+      groups += 1
+      @programs.reject! { |_, p| visited.include?(p) }
     end
-    groups.size
+    groups
   end
 
   def parse_input
