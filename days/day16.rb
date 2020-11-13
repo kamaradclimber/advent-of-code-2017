@@ -5,13 +5,38 @@ require 'aoc'
 class Day16 < Day
   def initialize(input:, part:, size:)
     super(part: part, input: input)
-    @programs = ('a'..'z').to_a.take(size)
+    @move = Move.new(size)
   end
 
   def solve_part1
     moves = input.split(',').map(&:strip)
+    puts "#{moves.size} moves"
     dance(moves)
-    @programs.join
+    @move.to_s
+  end
+
+  def solve_part2
+    moves = input.split(',').map(&:strip)
+    known_positions = {}
+    known_positions[@move.to_s] = 0
+    i = 1
+    target = 1_000_000_000
+    while i < target
+      dance(moves)
+      signature = @move.to_s
+      if known_positions.key?(signature)
+        period = i - known_positions[signature]
+        # puts "Found loop of period #{period}"
+        # jump. Technically we could look for the solution directly in known_positions for signature at "i + period"
+        i += ((target - i) / period) * period
+        # puts "Jumping to iteration #{i}"
+        known_positions = {}
+      else
+        known_positions[signature] = i
+        i += 1
+      end
+    end
+    @move.to_s
   end
 
   private
@@ -20,28 +45,59 @@ class Day16 < Day
     moves.each do |move|
       case move
       when /^s(\d+)/
-        spin(Regexp.last_match(1).to_i)
+        @move.spin(Regexp.last_match(1).to_i)
       when %r{^x(\d+)/(\d+)}
-        exchange(Regexp.last_match(1).to_i, Regexp.last_match(2).to_i)
+        @move.exchange(Regexp.last_match(1).to_i, Regexp.last_match(2).to_i)
       when %r{^p(.)/(.)}
-        partner(Regexp.last_match(1), Regexp.last_match(2))
+        @move.partner(Regexp.last_match(1), Regexp.last_match(2))
       end
     end
   end
 
-  def spin(count)
-    @programs = @programs.drop(@programs.size - count) + @programs.take(@programs.size - count)
-  end
+  # a move represented by a hash where:
+  # - keys are the program (letter)
+  # - values are the final position
+  class Move
+    attr_reader :inner_hash, :size
 
-  def exchange(i, j)
-    tmp = @programs[i]
-    @programs[i] = @programs[j]
-    @programs[j] = tmp
-  end
+    # @param size [Integer] number of programs in the dance
+    def initialize(size)
+      @size = size
+      @inner_hash = ('a'..'z').to_a.take(size).each_with_index.to_a.to_h
+    end
 
-  def partner(a, b)
-    a_pos = @programs.find_index { |c| c == a }
-    b_pos = @programs.find_index { |c| c == b }
-    exchange(a_pos, b_pos)
+    def to_s
+      @inner_hash.sort_by { |_, position| position }.map(&:first).join
+    end
+
+    # @param count [Integer] count of program that spin
+    def spin(count)
+      inner_hash.transform_values! do |position|
+        if position >= size - count
+          position - (size - count)
+        else
+          position + count
+        end
+      end
+    end
+
+    def exchange(i, j)
+      i_index = nil
+      j_index = nil
+      inner_hash.each do |index, k|
+        i_index = index if k == i
+        j_index = index if k == j
+      end
+      inner_hash[i_index] = j
+      inner_hash[j_index] = i
+    end
+
+    def partner(a, b)
+      tmp = inner_hash[a]
+      inner_hash[a] = inner_hash[b]
+      inner_hash[b] = tmp
+    end
+
+    def apply(other_move); end
   end
 end

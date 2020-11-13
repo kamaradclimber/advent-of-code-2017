@@ -8,6 +8,7 @@ RSpec.describe Day16 do
     let(:size) { 5 }
     let(:part) { 1 }
     {
+      's1' => 'eabcd',
       's1,x3/4,pe/b' => 'baedc'
     }.each do |example, solution|
       context "example #{example[0..15]}" do
@@ -42,7 +43,7 @@ RSpec.describe Day16 do
 
     context 'real input' do
       let(:size) { 16 }
-      pending 'finds a solution for part2' do
+      it 'finds a solution for part2' do
         solution = subject.solve
         puts "Solution for part 2 is #{solution}"
       end
