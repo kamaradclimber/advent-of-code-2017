@@ -50,9 +50,20 @@ class Day15 < Day
     end
 
     def next
-      loop do
+      if @mandatory_factor == 1
         @value = (@value * @factor) % 2147483647
-        break if @value % @mandatory_factor == 0
+      else
+        loop do
+          # special case of reminder by a mersenne number (does not have to be prime btw)
+          # but it happens to be slower than the naive version
+          # mult = @value * @factor
+          # a = mult >> 31
+          # b = mult & 0x7fffffff
+          # @value = a + b
+
+          @value = (@value * @factor) % 2147483647
+          break if @value & (@mandatory_factor - 1) == 0
+        end
       end
       @value
     end
