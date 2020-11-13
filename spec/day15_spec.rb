@@ -7,17 +7,19 @@ RSpec.describe Day15 do
   describe 'part 1' do
     let(:part) { 1 }
     {
+      'Generator A starts with 65
+Generator B starts with 8921' => 588
     }.each do |example, solution|
       context "example #{example[0..15]}" do
         let(:input) { example }
-        pending "works on example #{example}" do
+        it "works on example #{example}" do
           expect(subject.solve).to eq(solution)
         end
       end
     end
 
     context 'real input' do
-      pending 'finds a solution for part1' do
+      it 'finds a solution for part1' do
         solution = subject.solve
         puts "Solution for part 1 is #{solution}"
       end
@@ -27,17 +29,19 @@ RSpec.describe Day15 do
   describe 'part 2' do
     let(:part) { 2 }
     {
+      'Generator A starts with 65
+Generator B starts with 8921' => 309
     }.each do |example, solution|
       context "example #{example[0..15]}" do
         let(:input) { example }
-        pending "works on example #{example}" do
+        it "works on example #{example}" do
           expect(subject.solve).to eq(solution)
         end
       end
     end
 
     context 'real input' do
-      pending 'finds a solution for part2' do
+      it 'finds a solution for part2' do
         solution = subject.solve
         puts "Solution for part 2 is #{solution}"
       end
@@ -45,5 +49,7 @@ RSpec.describe Day15 do
   end
 
   let(:input) do
+    'Generator A starts with 634
+Generator B starts with 301'
   end
 end
