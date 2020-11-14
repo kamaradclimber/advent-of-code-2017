@@ -4,20 +4,30 @@ require 'aoc'
 
 class Day19 < Day
   def solve_part1
-    @maze = input.split("\n").map(&:chars)
-    position = find_entry
-    @letters = []
+    maze_walk[0]
+  end
+
+  def solve_part2
+    maze_walk[1]
+  end
+
+  def maze_walk
+    maze = input.split("\n").map(&:chars)
+    position = find_entry(maze)
+    letters = []
+    steps = 0
     loop do
-      position = position.next(@maze)
-      @letters << position.letter if position&.letter
+      position = position.next(maze)
+      letters << position.letter if position&.letter
+      steps += 1
       break unless position
     end
-    @letters.join
+    [letters.join, steps]
   end
 
   # @return [[Point, Direction]]
-  def find_entry
-    x = @maze[0].find_index { |c| c == '|' }
+  def find_entry(maze)
+    x = maze[0].find_index { |c| c == '|' }
     Point.new(x: x, y: 0, direction: Direction::DOWN)
   end
 

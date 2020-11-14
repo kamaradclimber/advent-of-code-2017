@@ -36,17 +36,25 @@ RSpec.describe Day19 do
   describe 'part 2' do
     let(:part) { 2 }
     {
+      # rubocop:disable Layout/TrailingWhitespace
+      '     |          
+     |  +--+    
+     A  |  C    
+ F---|--|-E---+ 
+     |  |  |  D 
+     +B-+  +--+ ' => 38
+      # rubocop:enable Layout/TrailingWhitespace
     }.each do |example, solution|
       context "example #{example[0..15]}" do
         let(:input) { example }
-        pending "works on example #{example}" do
+        it "works on example #{example}" do
           expect(subject.solve).to eq(solution)
         end
       end
     end
 
     context 'real input' do
-      pending 'finds a solution for part2' do
+      it 'finds a solution for part2' do
         solution = subject.solve
         puts "Solution for part 2 is #{solution}"
       end
