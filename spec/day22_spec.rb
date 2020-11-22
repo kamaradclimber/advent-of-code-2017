@@ -7,17 +7,20 @@ RSpec.describe Day22 do
   describe 'part 1' do
     let(:part) { 1 }
     {
+      '..#
+#..
+...' => 5587
     }.each do |example, solution|
       context "example #{example[0..15]}" do
         let(:input) { example }
-        pending "works on example #{example}" do
+        it "works on example #{example}" do
           expect(subject.solve).to eq(solution)
         end
       end
     end
 
     context 'real input' do
-      pending 'finds a solution for part1' do
+      it 'finds a solution for part1' do
         solution = subject.solve
         puts "Solution for part 1 is #{solution}"
       end
@@ -27,17 +30,20 @@ RSpec.describe Day22 do
   describe 'part 2' do
     let(:part) { 2 }
     {
+      '..#
+#..
+...' => 2511944
     }.each do |example, solution|
       context "example #{example[0..15]}" do
         let(:input) { example }
-        pending "works on example #{example}" do
+        it "works on example #{example}" do
           expect(subject.solve).to eq(solution)
         end
       end
     end
 
     context 'real input' do
-      pending 'finds a solution for part2' do
+      it 'finds a solution for part2' do
         solution = subject.solve
         puts "Solution for part 2 is #{solution}"
       end
@@ -45,5 +51,30 @@ RSpec.describe Day22 do
   end
 
   let(:input) do
+    '.......##.#..####.#....##
+..###....###.####..##.##.
+#..####.#....#.#....##...
+.#....#.#.#....#######...
+.###..###.#########....##
+##...#####..#####.###.#..
+.#..##.###.#.#....######.
+.#.##.#..####..#.##.....#
+#.#..###..##..#......##.#
+##.###.##.#.#...##.#.##..
+##...#.######.#..##.#...#
+....#.####..#..###.##..##
+...#....#.###.#.#..#.....
+..###.#.#....#.....#.####
+.#....##..##.#.#...#.#.#.
+...##.#.####.###.##...#.#
+##.#.####.#######.##..##.
+.##...#......####..####.#
+#..###.#.###.##.#.#.##..#
+#..###.#.#.#.#.#....#.#.#
+####.#..##..#.#..#..#.###
+##.....#..#.#.#..#.####..
+#####.....###.........#..
+##...#...####..#####...##
+.....##.#....##...#.....#'
   end
 end
