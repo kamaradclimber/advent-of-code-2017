@@ -52,19 +52,11 @@ RSpec.describe Day21 do
   end
 
   describe 'part 2' do
+    let(:iterations) { 18 }
     let(:part) { 2 }
-    {
-    }.each do |example, solution|
-      context "example #{example[0..15]}" do
-        let(:input) { example }
-        pending "works on example #{example}" do
-          expect(subject.solve).to eq(solution)
-        end
-      end
-    end
 
     context 'real input' do
-      pending 'finds a solution for part2' do
+      it 'finds a solution for part2' do
         solution = subject.solve
         puts "Solution for part 2 is #{solution}"
       end

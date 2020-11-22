@@ -9,7 +9,7 @@ class Day21 < Day
     super(input: input, part: part)
   end
 
-  def solve_part1
+  def solve
     rules = input.split("\n").map do |line|
       raise ArgumentError, line unless line =~ /(.+) => (.+)/
 
@@ -20,6 +20,7 @@ class Day21 < Day
 
     grid = [[start]]
     @iterations.times do |iteration|
+      puts "Iteration #{iteration}, #{grid.flatten.size} pattern to explore, #{pixels_on(grid)} pixels on"
       new_grid = grid.map do |grid_line|
         grid_line.map do |grid_cell|
           res = rules[grid_cell]
@@ -29,9 +30,10 @@ class Day21 < Day
         end
       end
       grid = resplit(new_grid)
-      before = pixels_on(grid)
-      after = pixels_on(new_grid)
-      raise "The resplit method has transformed the grid #{before} #{after}" unless before == after
+      # validity check but we don't need it unless debugging
+      # before = pixels_on(grid)
+      # after = pixels_on(new_grid)
+      # raise "The resplit method has transformed the grid #{before} #{after}" unless before == after
     end
     pixels_on(grid)
   end
