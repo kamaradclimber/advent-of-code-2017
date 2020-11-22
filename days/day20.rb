@@ -2,6 +2,7 @@
 
 require 'aoc'
 require 'pry'
+require 'bigdecimal'
 
 class Day20 < Day
   def particles
@@ -58,9 +59,9 @@ class Day20 < Day
       raise ArgumentError, line
     end
 
-    pos =   Vector.new(x: Regexp.last_match(1).to_i, y: Regexp.last_match(2).to_i, z: Regexp.last_match(3).to_i)
-    speed = Vector.new(x: Regexp.last_match(4).to_i, y: Regexp.last_match(5).to_i, z: Regexp.last_match(6).to_i)
-    acc =   Vector.new(x: Regexp.last_match(7).to_i, y: Regexp.last_match(8).to_i, z: Regexp.last_match(9).to_i)
+    pos =   Vector.new(x: Regexp.last_match(1), y: Regexp.last_match(2), z: Regexp.last_match(3))
+    speed = Vector.new(x: Regexp.last_match(4), y: Regexp.last_match(5), z: Regexp.last_match(6))
+    acc =   Vector.new(x: Regexp.last_match(7), y: Regexp.last_match(8), z: Regexp.last_match(9))
     Particle.new(pos: pos, speed: speed, acc: acc, id: id)
   end
 
@@ -68,9 +69,9 @@ class Day20 < Day
     attr_accessor :x, :y, :z
 
     def initialize(x:, y:, z:)
-      @x = x
-      @y = y
-      @z = z
+      @x = BigDecimal(x)
+      @y = BigDecimal(y)
+      @z = BigDecimal(z)
     end
 
     def manhattan

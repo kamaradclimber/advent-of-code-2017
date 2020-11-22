@@ -87,6 +87,8 @@ p=<6,3,6>, v=<0,0,0>, a=<-1,-1,-2>'
     context 'real input' do
       it 'finds a solution for part2' do
         solution = subject.solve
+        raise 'Invalid solution' if solution == 749
+
         puts "Solution for part 2 is #{solution}"
       end
     end
